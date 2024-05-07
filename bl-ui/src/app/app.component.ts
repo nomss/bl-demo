@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TestService } from '../services/test.service';
+import { LoginService } from '../services/login.service';
 
 @Component({
   selector: 'app-root',
@@ -10,9 +11,12 @@ import { TestService } from '../services/test.service';
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
-  title = 'bl-ui';
 
-  constructor(private testService: TestService) {}
+  title = 'bl-ui';
+  public userName: string = "";
+  private password: string = "";
+
+  constructor(private testService: TestService, private loginService: LoginService) { }
 
   ngOnInit(): void {
     this.testService.getHello().subscribe(
@@ -20,6 +24,13 @@ export class AppComponent implements OnInit {
         console.log("res: ", res);
       }
     )
+  }
+
+  login() {
+    console.log("Login");
+    this.loginService.login().subscribe((res: any) => {
+      console.log("res", res);
+    })
   }
 
 
