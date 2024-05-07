@@ -10,6 +10,10 @@ Clone the repository on your local machine.
   ![image](https://github.com/nomss/bl-demo/assets/93707322/c69735cd-af39-4154-a4ca-c597ad2719d6)
 3. Connection Name: **bl-db**
    Add password by clicking "Store in Vault..." and type in: **root**
+4. Click OK and click on the newly created connection
+5. In the right sidebar right click and select -> Create Schema
+6. Name it: **bl-db**
+7. Click Apply and Finish
 
 ## Frontend Setup (Angular)
 1. Download node v20 - this will download and setup node(v20) and npm(v10)
