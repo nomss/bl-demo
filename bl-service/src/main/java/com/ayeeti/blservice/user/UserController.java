@@ -18,8 +18,8 @@ public class UserController {
     }
 
     @GetMapping("/getUser")
-    public UserDTO createUser() {
-        return userService.getUser(1L);
+    public UserDTO getUser() {
+        return userService.getUser(3L);
     }
 
 }

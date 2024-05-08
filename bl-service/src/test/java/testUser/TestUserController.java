@@ -1,4 +1,4 @@
-package com.ayeeti.blservice;
+package com.ayeeti.testUser;
 
 import com.ayeeti.blservice.user.IUserRepository;
 import com.ayeeti.blservice.user.UserController;
@@ -9,32 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class TestUserService {
+public class TestUserController {
 
     @Autowired
     private UserController userController;
 
-    @Autowired
-    private UserService userService;
+//    @Autowired
+//    private UserService userService;
 
-    @Autowired
-    private IUserRepository userRepository;
-
-    @Test
-    public void testUserServiceGet() {
-        userService.getUser(3L);
-    }
-
-    @Test
-    public void testUserServiceUpdate() {
-        UserDTO userDTO = userService.updateUser(1L, "TestUpdated1");
-        System.out.println("userDTO: " + userDTO);
-    }
-
-    @Test
-    public void testUserServiceDelete() {
-        userService.deleteUser(1L);
-    }
+//    @Autowired
+//    private IUserRepository userRepository;
 
     @Test
     public void testGetUser() {
