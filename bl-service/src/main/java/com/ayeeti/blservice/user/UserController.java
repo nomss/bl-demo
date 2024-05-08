@@ -17,9 +17,20 @@ public class UserController {
         return userService.createUser(userRequest.username(), userRequest.password());
     }
 
-    @GetMapping("/getUser")
-    public UserDTO getUser() {
-        return userService.getUser(3L);
+    @GetMapping("/{id}")
+    public UserDTO getUser(@PathVariable Long id) {
+        return userService.getUser(id);
+    }
+
+    @DeleteMapping("/{id}")
+    public UserDTO deleteUser(@PathVariable Long userId) {
+        return userService.deleteUser(userId);
+    }
+
+    @PutMapping("/updateUser")
+    public UserDTO updateUser(UserUpdateRequest userUpdateRequest) {
+        System.out.println("userUpdateRequest: " + userUpdateRequest);
+        return userService.updateUser(userUpdateRequest.userId(), userUpdateRequest.newUserName());
     }
 
 }

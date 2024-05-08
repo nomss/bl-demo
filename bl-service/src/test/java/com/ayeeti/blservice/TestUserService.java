@@ -38,7 +38,7 @@ public class TestUserService {
 
     @Test
     public void testGetUser() {
-        UserDTO user = userController.getUser();
+        UserDTO user = userController.getUser(3L);
         System.out.println("user: " + user);
     }
 

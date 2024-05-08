@@ -28,8 +28,9 @@ public class UserService {
         return new UserDTO(user.getId(), user.getUsername());
     }
 
-    public void deleteUser(Long userId) {
+    public UserDTO deleteUser(Long userId) {
         userRepository.deleteById(userId);
+        return getUser(userId);
     }
 
     public UserDTO updateUser(Long userId, String userName) {
