@@ -16,4 +16,10 @@ public class UserController {
     public UserDTO createUser(@RequestBody UserRequest userRequest) {
         return userService.createUser(userRequest.username(), userRequest.password());
     }
+
+    @GetMapping("/getUser")
+    public UserDTO createUser() {
+        return userService.getUser(1L);
+    }
+
 }

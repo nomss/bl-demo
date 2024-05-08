@@ -1,7 +1,10 @@
 package com.ayeeti.blservice.user;
 
+import com.ayeeti.blservice.location.LocationEntity;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "USER")
@@ -21,4 +24,8 @@ public class User {
 
     @Column(name = "password", nullable = false)
     private String password;
+
+    @OneToMany
+    private List<LocationEntity> locationEntity;
+
 }
