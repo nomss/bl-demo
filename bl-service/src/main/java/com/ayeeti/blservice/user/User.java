@@ -1,9 +1,10 @@
 package com.ayeeti.blservice.user;
 
-import com.ayeeti.blservice.location.LocationEntity;
+import com.ayeeti.blservice.location.Location;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -25,7 +26,12 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @OneToMany
-    private List<LocationEntity> locationEntity;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "USER_LOCATION",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "location_id")
+    )
+    private List<Location> locations = new ArrayList<>();
 
 }

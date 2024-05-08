@@ -1,4 +1,6 @@
 package com.ayeeti.blservice.user;
 
-public record UserDTO(Long id, String username) {
+import com.ayeeti.blservice.location.LocationDTO;
+
+public record UserDTO(Long id, String username, java.util.List<LocationDTO> locationDTO) {
 }
