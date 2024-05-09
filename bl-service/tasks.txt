@@ -1,2 +1,1 @@
-1. Create GET/PUT/DELETE methods for USER (test using Postman)
-2. Create Location Entity (User can have 0 or more Location) (location should have airport, portCode)
+1. COMPLETE The locaiton REST structure (Controller, Service, Repository, ...). Use User as an example.
