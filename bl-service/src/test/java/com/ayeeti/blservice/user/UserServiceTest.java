@@ -1,15 +1,14 @@
-package com.ayeeti.blservice;
+package com.ayeeti.blservice.user;
 
-import com.ayeeti.blservice.user.IUserRepository;
-import com.ayeeti.blservice.user.UserController;
-import com.ayeeti.blservice.user.UserDTO;
-import com.ayeeti.blservice.user.UserService;
+import com.ayeeti.blservice.location.requests.LocationRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Set;
+
 @SpringBootTest
-public class TestUserService {
+class UserServiceTest {
 
     @Autowired
     private UserController userController;
@@ -17,8 +16,10 @@ public class TestUserService {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private IUserRepository userRepository;
+    @Test
+    public void createUser() {
+        userService.createUser("Test1", "TestP1");
+    }
 
     @Test
     public void testUserServiceGet() {
@@ -42,4 +43,13 @@ public class TestUserService {
         System.out.println("user: " + user);
     }
 
+    @Test
+    void createUserAtLocation() {
+        LocationRequest locationRequest = new LocationRequest("John", "JFK");
+        try {
+            userService.createUserAtLocation("Test1", "P2", Set.of(locationRequest));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

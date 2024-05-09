@@ -22,7 +22,7 @@ public class Location {
     @Column(name = "airport_name", nullable = false, unique = true)
     private String airportName;
 
-    @Column(name = "airport_code", nullable = false)
+    @Column(name = "airport_code", nullable = false, unique = true)
     private String airportCode;
 
     @ManyToMany(mappedBy = "locations")

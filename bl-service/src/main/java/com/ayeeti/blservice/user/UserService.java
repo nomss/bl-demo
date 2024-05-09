@@ -1,17 +1,24 @@
 package com.ayeeti.blservice.user;
 
-
-import com.ayeeti.blservice.location.LocationDtoMapper;
+import com.ayeeti.blservice.location.Location;
+import com.ayeeti.blservice.location.LocationMapper;
+import com.ayeeti.blservice.location.LocationService;
+import com.ayeeti.blservice.location.requests.LocationRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserService {
     private final IUserRepository userRepository;
+    private final LocationService locationService;
 
-    public UserService(IUserRepository userRepository) {
+    public UserService(IUserRepository userRepository, LocationService locationService) {
         this.userRepository = userRepository;
+        this.locationService = locationService;
     }
 
     public UserDTO createUser(String username, String password) {
@@ -20,18 +27,46 @@ public class UserService {
                 .password(password)
                 .build();
         User result = userRepository.save(user);
-        return new UserDTO(result.getId(), result.getUsername(), null);
+        return new UserDTO(result.getId(), result.getUsername(), null, null);
+    }
+
+    @Transactional
+    public UserDTO createUserAtLocation(String username, String password, Set<LocationRequest> locationRequest) throws Exception {
+        if (locationRequest == null || locationRequest.isEmpty()) {
+            throw new RuntimeException("Airport Code cannot be empty");
+        }
+        Set<String> airportCoeds = new HashSet<>();
+        for (LocationRequest locationReq: locationRequest) {
+            airportCoeds.add(locationReq.getAirtportCode());
+        }
+
+        Set<Location> location = locationService.findByAirportCodes(airportCoeds);
+        if (location == null || location.isEmpty()) {
+            throw new RuntimeException("Location could not be found. Please create the Location first.");
+        }
+
+        User user = User.builder()
+                .username(username)
+                .password(password)
+                .locations(location)
+                .build();
+        User result = userRepository.save(user);
+        return UserMapper.mapUserToUserDTO(result);
     }
 
     public UserDTO getUser(Long userId) {
         Optional<User> result = userRepository.findById(userId);
         User user = result.orElseThrow(() -> new RuntimeException("No user found with ID: " + userId));
-        return new UserDTO(user.getId(), user.getUsername(), LocationDtoMapper.mapLocationsToLocationDTOs(user.getLocations()));
+        return new UserDTO(user.getId(), user.getUsername(), LocationMapper.mapLocationsToLocationDTOs(user.getLocations()), null);
     }
 
     public UserDTO deleteUser(Long userId) {
+        Optional<User> result = userRepository.findById(userId);
+        User user = result.orElseThrow(() -> new RuntimeException("No user found with ID: " + userId));
+        UserDTO userDTO = UserMapper.mapUserToUserDTO(user);
         userRepository.deleteById(userId);
-        return new UserDTO(null, null, null); // TODO: Use responseEntitiy here
+        userDTO.setErrorMessage("User Deleted Successfully");
+        return userDTO;
     }
 
     public UserDTO updateUser(Long userId, String userName) {
@@ -39,6 +74,6 @@ public class UserService {
         User user = result.orElseThrow(() -> new RuntimeException("No user found with ID: " + userId));
         user.setUsername(userName);
         User updatedUser = userRepository.save(user);
-        return new UserDTO(updatedUser.getId(), updatedUser.getUsername(), null);
+        return new UserDTO(updatedUser.getId(), updatedUser.getUsername(), null, null);
     }
 }
