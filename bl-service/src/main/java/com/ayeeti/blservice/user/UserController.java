@@ -1,6 +1,6 @@
 package com.ayeeti.blservice.user;
 
-import com.ayeeti.blservice.user.requests.CreateUserAtLocation;
+import com.ayeeti.blservice.user.requests.CreateUserAtLocationRequest;
 import com.ayeeti.blservice.user.requests.CreateUserRequest;
 import com.ayeeti.blservice.user.requests.UpdateUserRequest;
 import org.springframework.web.bind.annotation.*;
@@ -35,14 +35,13 @@ public class UserController {
         return userService.updateUser(userUpdateUserNameRequest.userId(), userUpdateUserNameRequest.newUserName());
     }
 
-    @PostMapping("/createUserAtLocation")
-    public UserDTO createUserAtLocation(@RequestBody CreateUserAtLocation createUserAtLocation) {
+    @PostMapping("createAtLocation")
+    public UserDTO createUserAtLocation(@RequestBody CreateUserAtLocationRequest createUserAtLocationRequest) {
         try {
-            return userService.createUserAtLocation(createUserAtLocation.getUsername(), createUserAtLocation.getPassword(), createUserAtLocation.getLocationRequests());
+            return userService.createUserAtLocation(createUserAtLocationRequest.getUsername(), createUserAtLocationRequest.getPassword(), createUserAtLocationRequest.getLocationRequests());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
-
 
 }

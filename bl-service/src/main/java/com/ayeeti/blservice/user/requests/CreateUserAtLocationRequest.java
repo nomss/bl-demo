@@ -12,7 +12,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Getter
 @Setter
-public class CreateUserAtLocation {
+public class CreateUserAtLocationRequest {
 
     private String username;
     private String password;

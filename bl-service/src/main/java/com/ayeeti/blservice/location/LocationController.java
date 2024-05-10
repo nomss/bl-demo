@@ -4,7 +4,7 @@ import com.ayeeti.blservice.location.requests.LocationRequest;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/location")
+@RequestMapping("/api/v1/locations")
 public class LocationController {
 
     private final LocationService locationService;
@@ -12,7 +12,7 @@ public class LocationController {
         this.locationService = locationService;
     }
 
-    @PostMapping("/createLocation")
+    @PostMapping()
     public LocationDTO createLocation(@RequestBody LocationRequest locationRequest) {
         Location location = locationService.createLocation(locationRequest.getAirportName(), locationRequest.getAirportCode());
         return LocationMapper.mapLocationToLocationDTO(location);
