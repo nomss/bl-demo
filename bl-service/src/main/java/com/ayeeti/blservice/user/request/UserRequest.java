@@ -1,4 +1,16 @@
 package com.ayeeti.blservice.user.request;
 
-public record UserRequest(Long id, String username, String password) {
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@ToString
+public class UserRequest {
+    private Long id;
+    private String username;
+    private String password;
 }
