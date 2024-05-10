@@ -37,7 +37,7 @@ public class UserService {
         }
         Set<String> airportCoeds = new HashSet<>();
         for (LocationRequest locationReq: locationRequest) {
-            airportCoeds.add(locationReq.getAirtportCode());
+            airportCoeds.add(locationReq.getAirportCode());
         }
 
         Set<Location> location = locationService.findByAirportCodes(airportCoeds);

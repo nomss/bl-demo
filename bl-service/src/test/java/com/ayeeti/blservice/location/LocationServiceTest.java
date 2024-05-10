@@ -12,6 +12,6 @@ class LocationServiceTest {
 
     @Test
     void saveLocation() {
-        locationService.saveLocation("John", "JFK");
+        locationService.createLocation("John2", "JFK2");
     }
 }

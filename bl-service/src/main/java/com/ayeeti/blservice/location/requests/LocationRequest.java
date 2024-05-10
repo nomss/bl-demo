@@ -12,6 +12,6 @@ import lombok.Setter;
 public class LocationRequest {
 
     private String airportName;
-    private String airtportCode;
+    private String airportCode;
 
 }

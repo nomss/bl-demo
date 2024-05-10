@@ -12,7 +12,7 @@ public class LocationService {
         this.locationRepository = locationRepository;
     }
 
-    public Location saveLocation(String airportName, String aiportCode) {
+    public Location createLocation(String airportName, String aiportCode) {
         Location location = Location.builder()
                 .airportName(airportName)
                 .airportCode(aiportCode)
