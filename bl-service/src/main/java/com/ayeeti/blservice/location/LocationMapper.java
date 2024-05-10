@@ -33,19 +33,4 @@ public class LocationMapper {
         );
     }
 
-//    public static Location mapLocationRequestToLocation(LocationRequest locationRequest) {
-//
-//    }
-
-//    private static Location mapToLocation(LocationRequest locationRequest) {
-//        if (locationRequest == null) {
-//            return null;
-//        }
-//        return new LocationDTO(
-//                location.getId(),
-//                location.getAirportName(),
-//                location.getAirportCode()
-//        );
-//    }
-
 }
