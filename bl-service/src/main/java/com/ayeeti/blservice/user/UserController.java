@@ -1,8 +1,10 @@
 package com.ayeeti.blservice.user;
 
-import com.ayeeti.blservice.user.requests.CreateUserRequest;
-import com.ayeeti.blservice.user.requests.UpdateUserRequest;
+import com.ayeeti.blservice.user.request.UserRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -15,7 +17,7 @@ public class UserController {
     }
 
     @PostMapping()
-    public UserDTO createUser(@RequestBody CreateUserRequest userRequest) {
+    public UserDTO createUser(@RequestBody UserRequest userRequest) {
         return userService.createUser(userRequest.username(), userRequest.password());
     }
 
@@ -24,14 +26,20 @@ public class UserController {
         return userService.getUser(id);
     }
 
-    @DeleteMapping("/{id}") // TODO: do it right way (ResponseEntity)
-    public UserDTO deleteUser(@PathVariable Long id) {
-        return userService.deleteUser(id);
+    @GetMapping
+    public List<UserDTO> getAllUsers() {
+        return userService.getAllUsers();
     }
 
-    @PutMapping() // TODO: FIX
-    public UserDTO updateUser(@RequestBody UpdateUserRequest userUpdateUserNameRequest) {
-        return userService.updateUser(userUpdateUserNameRequest.userId(), userUpdateUserNameRequest.newUserName());
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+        return ResponseEntity.ok().build(); // sends STATUS 200
+    }
+
+    @PutMapping()
+    public UserDTO updateUser(@RequestBody UserRequest userRequest) {
+        return userService.updateUser(userRequest.id(), userRequest.username()); // we update just the username for simplicity
     }
 
 }
