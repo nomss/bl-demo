@@ -1,8 +1,8 @@
 package com.ayeeti.blservice.user;
 
 import com.ayeeti.blservice.location.requests.LocationRequest;
+import com.ayeeti.blservice.user.request.UserRequest;
 import com.ayeeti.blservice.user.requests.CreateUserAtLocationRequest;
-import com.ayeeti.blservice.user.requests.UpdateUserRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,8 +23,8 @@ class UserControllerTest {
 
     @Test
     public void updateUser() {
-        UpdateUserRequest userUpdateUserNameRequest = new UpdateUserRequest(3L, "NewUserNameTest3");
-        UserDTO user = userController.updateUser(userUpdateUserNameRequest);
+        UserRequest userRequest = new UserRequest(1L, "TEST New User", "p");
+        UserDTO user = userController.updateUser(userRequest);
         System.out.println("user: " + user);
     }
 
