@@ -19,7 +19,8 @@ public class UserController {
 
     @PostMapping()
     public UserDTO createUser(@RequestBody UserRequest userRequest) {
-        return userService.createUser(userRequest.username(), userRequest.password());
+        System.out.println("userRequest: " + userRequest);
+        return userService.createUser(userRequest.getUsername(), userRequest.getPassword());
     }
 
     @GetMapping("/{id}")
@@ -40,7 +41,7 @@ public class UserController {
 
     @PutMapping()
     public UserDTO updateUser(@RequestBody UserRequest userRequest) {
-        return userService.updateUser(userRequest.id(), userRequest.username()); // we update just the username for simplicity
+        return userService.updateUser(userRequest.getId(), userRequest.getUsername()); // we update just the username for simplicity
     }
 
     @PostMapping("createAtLocation")
