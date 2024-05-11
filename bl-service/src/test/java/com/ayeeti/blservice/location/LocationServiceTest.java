@@ -1,5 +1,6 @@
 package com.ayeeti.blservice.location;
 
+import com.ayeeti.blservice.location.requests.LocationRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,6 +13,10 @@ class LocationServiceTest {
 
     @Test
     void saveLocation() {
-        locationService.createLocation("John2", "JFK2");
+        LocationRequest locationRequest = LocationRequest.builder()
+                .airportName("John2")
+                .airportCode("JFK2")
+                .build();
+        locationService.createLocation(locationRequest);
     }
 }

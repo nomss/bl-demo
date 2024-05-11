@@ -1,5 +1,8 @@
 package com.ayeeti.blservice.user;
 
+
+import com.ayeeti.blservice.location.LocationMapper;
+import jakarta.persistence.EntityNotFoundException;
 import com.ayeeti.blservice.location.Location;
 import com.ayeeti.blservice.location.LocationMapper;
 import com.ayeeti.blservice.location.LocationService;
@@ -7,6 +10,7 @@ import com.ayeeti.blservice.location.requests.LocationRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -60,6 +64,11 @@ public class UserService {
         return new UserDTO(user.getId(), user.getUsername(), LocationMapper.mapLocationsToLocationDTOs(user.getLocations()), null);
     }
 
+    public List<UserDTO> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        return users.stream().map(user -> new UserDTO(user.getId(), user.getUsername(), LocationMapper.mapLocationsToLocationDTOs(user.getLocations()), null)).toList();
+    }
+
     public UserDTO deleteUser(Long userId) {
         Optional<User> result = userRepository.findById(userId);
         User user = result.orElseThrow(() -> new RuntimeException("No user found with ID: " + userId));
@@ -69,11 +78,11 @@ public class UserService {
         return userDTO;
     }
 
-    public UserDTO updateUser(Long userId, String userName) {
+    public UserDTO updateUser(Long userId, String userName) { // we just update username for simplicity
         Optional<User> result = userRepository.findById(userId);
         User user = result.orElseThrow(() -> new RuntimeException("No user found with ID: " + userId));
         user.setUsername(userName);
         User updatedUser = userRepository.save(user);
-        return new UserDTO(updatedUser.getId(), updatedUser.getUsername(), null, null);
+        return new UserDTO(updatedUser.getId(), updatedUser.getUsername(), LocationMapper.mapLocationsToLocationDTOs(user.getLocations()), null);
     }
 }

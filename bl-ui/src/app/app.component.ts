@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { TestService } from '../services/test.service';
 
 @Component({
   selector: 'app-root',
@@ -12,14 +11,10 @@ import { TestService } from '../services/test.service';
 export class AppComponent implements OnInit {
   title = 'bl-ui';
 
-  constructor(private testService: TestService) {}
+  constructor() {}
 
   ngOnInit(): void {
-    this.testService.getHello().subscribe(
-      (res: any) => {
-        console.log("res: ", res);
-      }
-    )
+
   }
 
 
