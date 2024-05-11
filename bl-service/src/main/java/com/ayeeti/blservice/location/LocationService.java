@@ -1,9 +1,12 @@
 package com.ayeeti.blservice.location;
 
+import com.ayeeti.blservice.location.requests.LocationRequest;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class LocationService {
@@ -14,23 +17,15 @@ public class LocationService {
         this.locationRepository = locationRepository;
     }
 
-    public LocationDTO createLocation(String airportName, String airportCode) {
-        Location location = Location.builder()
-                .airportName(airportName)
-                .airportCode(airportCode)
-                .build();
-        Location result = locationRepository.save(location);
-        return LocationMapper.mapLocationToLocationDTO(result);
-    }
+
 
     public LocationDTO getLocation(String airportCode) {
         Location result = locationRepository.findByAirportCode(airportCode).orElseThrow(() -> new EntityNotFoundException("No location found with Airport Code: " + airportCode));
         return LocationMapper.mapLocationToLocationDTO(result);
     }
 
-    public List<LocationDTO> getAllLocations() {
-        List<Location> locations = locationRepository.findAll();
-        return LocationMapper.mapLocationsToLocationDTOs(locations);
+    public Set<Location> getAllLocations() {
+                return (Set<Location>) locationRepository.findAll();
     }
 
     public void deleteLocation(String airportCode) {
@@ -41,11 +36,31 @@ public class LocationService {
     /**
      * we are searching by airportCode -> that way frontend doesn't need to care about db IDs
      */
-    public LocationDTO updateLocation(String airportName, String airportCode) {
-        Location location = locationRepository.findByAirportCode(airportCode).orElseThrow(() -> new EntityNotFoundException("No location found with Airport Code: " + airportCode));
-        location.setAirportName(airportName);
-        location.setAirportCode(airportCode);
-        locationRepository.save(location);
-        return LocationMapper.mapLocationToLocationDTO(location);
+    public Location updateLocation(LocationRequest locationRequest) {
+        Location location = locationRepository.findByAirportCode(locationRequest.getAirportCode()).orElseThrow(() -> new EntityNotFoundException("No location found with Airport Code: " + locationRequest.getAirportName()));
+        location.setAirportName(locationRequest.getAirportName());
+        location.setAirportCode(locationRequest.getAirportCode());
+        return locationRepository.save(location);
     }
+
+    public Location createLocation(LocationRequest locationRequest) {
+        if(locationRequest != null && !locationRequest.getAirportCode().isEmpty() && !locationRequest.getAirportName().isEmpty()) {
+            Location location = Location.builder()
+                    .airportName(locationRequest.getAirportName())
+                    .airportCode(locationRequest.getAirportCode())
+                    .build();
+            return locationRepository.save(location);
+        }
+        return null;
+    }
+
+    public Location findByAirportCode(String airportCode) {
+        Optional<Location> location = locationRepository.findByAirportCode(airportCode);
+        return location.orElse(null);
+    }
+
+    public Set<Location> findByAirportCodes(Set<String> airportCodes) {
+        return locationRepository.findByAirportCodeIn(airportCodes);
+    }
+
 }

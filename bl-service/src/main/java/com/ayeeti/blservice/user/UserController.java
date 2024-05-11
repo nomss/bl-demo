@@ -1,5 +1,6 @@
 package com.ayeeti.blservice.user;
 
+import com.ayeeti.blservice.user.requests.CreateUserAtLocationRequest;
 import com.ayeeti.blservice.user.request.UserRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +41,15 @@ public class UserController {
     @PutMapping()
     public UserDTO updateUser(@RequestBody UserRequest userRequest) {
         return userService.updateUser(userRequest.id(), userRequest.username()); // we update just the username for simplicity
+    }
+
+    @PostMapping("createAtLocation")
+    public UserDTO createUserAtLocation(@RequestBody CreateUserAtLocationRequest createUserAtLocationRequest) {
+        try {
+            return userService.createUserAtLocation(createUserAtLocationRequest.getUsername(), createUserAtLocationRequest.getPassword(), createUserAtLocationRequest.getLocationRequests());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

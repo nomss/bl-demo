@@ -3,9 +3,8 @@ package com.ayeeti.blservice.user;
 import com.ayeeti.blservice.location.Location;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "USER")
@@ -32,6 +31,6 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "location_id")
     )
-    private List<Location> locations = new ArrayList<>();
+    private Set<Location> locations = new HashSet<>();
 
 }

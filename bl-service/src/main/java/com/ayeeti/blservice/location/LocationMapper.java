@@ -1,6 +1,6 @@
 package com.ayeeti.blservice.location;
 
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class LocationMapper {
@@ -8,12 +8,12 @@ public class LocationMapper {
      * Maps a list of Location entities to a list of LocationDTOs.
      *
      * @param locations the list of Location entities
-     * @return a list of LocationDTOs
+     * @return a Set of LocationDTOs
      */
-    public static List<LocationDTO> mapLocationsToLocationDTOs(List<Location> locations) {
+    public static Set<LocationDTO> mapLocationsToLocationDTOs(Set<Location> locations) {
         return locations.stream()
                 .map(LocationMapper::mapLocationToLocationDTO)
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
     }
 
     /**
@@ -32,4 +32,5 @@ public class LocationMapper {
                 location.getAirportCode()
         );
     }
+
 }
